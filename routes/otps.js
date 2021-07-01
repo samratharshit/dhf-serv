@@ -43,6 +43,7 @@ router.route("/sendotptovisitor").post((req, res, next) => {
     let password = req.body.password;
     let email = req.body.email;
     let latestOtp = [];
+    console.log(req.body);
   
   function findLatestOTP(mongoCollection, callback) {
     mongoCollection
