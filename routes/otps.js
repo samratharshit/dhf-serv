@@ -38,8 +38,9 @@ router.route("/sendotptovisitor").post((req, res, next) => {
   });
 
 
-  router.route("/resetpwd/:id").put((req, res, next) => {
+  router.route("/resetpwd/:id").put((req, res) => {
     let visitorData = req.body;
+    console.log(visitorData);
     let password = req.body.password;
     let email = req.body.email;
     let latestOtp = [];
@@ -73,7 +74,7 @@ router.route("/sendotptovisitor").post((req, res, next) => {
         record.passwordHash = bcrypt.hashSync(password, 10);
         record.save((err, updatedRecord) => {
           if (err) {
-            return next(err);
+            return err
           }
           res.status(200).send(updatedRecord);
         });
