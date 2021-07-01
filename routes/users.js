@@ -102,14 +102,16 @@ router.post('/login', async (req,res) => {
 })
 
 
+
 router.post('/register', async (req,res)=>{
-
-   let existing =   User.find({ email : req.body.email}).limit(1);
+    const mailList = await User.find().select('email');
+   const fil = mailList.filter(x => x.email === req.body.email);
+   console.log(fil);
+   console.log(fil.length);
    
-   if (!existing)
-   {
-
-    let user = new User({
+    if(fil.length === 0)
+    {
+         let user = new User({
         name: req.body.name,
         email: req.body.email,
         passwordHash: bcrypt.hashSync(req.body.password, 10),
@@ -131,10 +133,9 @@ router.post('/register', async (req,res)=>{
     res.send(user);
 }
 else{
-    return res.status(409).send('Email ID Already Registered !!')
+    return res.status(204).send('Email ID Already Registered !!')
 }
-
-})
+});
 
 
 router.delete('/:id', (req, res)=>{
