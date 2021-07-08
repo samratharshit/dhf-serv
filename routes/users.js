@@ -34,6 +34,7 @@ router.post('/', async (req,res)=>{
         zip: req.body.zip,
         city: req.body.city,
         country: req.body.country,
+        pushToken: req.body.pushToken
     })
     user = await user.save();
 
@@ -65,6 +66,7 @@ router.put('/:id',async (req, res)=> {
             apartment: req.body.apartment,
             zip: req.body.zip,
             city: req.body.city,
+            pushToken: req.body.pushToken,
             country: req.body.country,
         },
         { new: true}
@@ -90,7 +92,7 @@ router.post('/login', async (req,res) => {
                 isAdmin: user.isAdmin
             },
             secret,
-            {expiresIn : '1m'}
+            {expiresIn : '1y'}
         )
        
         res.status(200).send({user: user.email , token: token}) 
@@ -121,6 +123,7 @@ router.post('/register', async (req,res)=>{
         apartment: req.body.apartment,
         zip: req.body.zip,
         city: req.body.city,
+        pushToken: req.body.pushToken,
         country: req.body.country,
     })
 
